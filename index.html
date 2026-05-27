@@ -66,9 +66,40 @@
         </form>
         <p id = "successText"></p>
         </div>
+      </div>
+
+      <!--transfer section-->
+      <div class="tab-pane fade" id="transfer">
+        <div class = "card p-4">
+          <h4>Transfer Money</h4>
+          <form id = "transferForm" class = "d-flex flex-column gap -3">
+            <input type = "number" id = "transferAmount" placeholder = "Enter the amount" class = "form-control"/>
+            From
+          <select id = "from" class = "form-select">
+            <option value = ""></option>
+            <option value = "saving">Saving</option>
+            <option value = "current">Current</option>
+          </select>
+          
+            To
+          <select id = "to" class = "form-select">
+            <option value = ""></option>
+            <option value = "saving">Saving</option>
+            <option value = "current">Current</option>
+          </select>
+          <button type = "button" id = "transferButton"class="btn btn-primary">Transfer</button>
+        </form>
+        </div>
+
+
+
+
 
       </div>
-      <div class="tab-pane fade" id="transfer">...</div>
+
+
+
+
       <div class="tab-pane fade" id="paysend">...</div>
        <div class="tab-pane fade" id="transactions">
         <div class = "card p-4">

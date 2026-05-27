@@ -15,6 +15,25 @@ const userBankDetails = {
         
         },
     transfer(to,from,amount){
+          amount = Number(amount);
+        if(from === to){
+            return false;
+
+        } else if(from === "saving" && this.saving_balance >= amount){
+            this.current_balance += amount;
+            this.saving_balance -= amount;
+            this.transactions.push(`Transferred ${amount} from saving to current on ${new Date().toString()}`);
+            return true
+        }else if(from === "current" && this.current_balance >= amount){
+            this.current_balance -= amount;
+            this.saving_balance += amount;
+            this.transactions.push(`Transferred ${amount} from current to saving on ${new Date().toString()}`);
+            return true;
+
+        }else{
+            return false;
+        }
+
 
     }}
 
@@ -37,8 +56,8 @@ function UI (){
 }
 //DOm elements 
 //set user current and saving balance
-document.getElementById("savingBalance").innerText = userBankDetails.saving_balance;
-document.getElementById("currentBalance").innerText=  userBankDetails.current_balance;
+UI();
+
 
 
 //deposit 
@@ -52,19 +71,36 @@ depositBtn.addEventListener("click",function(){
     const depositAccount = document.getElementById("to").value;
     const successText = document.getElementById("successText");
     
-    if(amount>0 && depositAccount){
-        userBankDetails.deposit(amount,type,depositAccount);
-         successText.innerText = `Successfully deposited $${amount} to your ${depositAccount} account via ${type}.`;
-        successText.style.color = "green";
-    }else{
-         successText.innerText = "Please enter amount and select account.";
-        successText.style.color = "red";
+    if(amount == 0 || !depositAccount || !type){
+        alert("enter amount ,deposit amount and type ");
 
     }
+    userBankDetails.deposit(amount,depositAccount,type)
     UI();
-  
+    form.reset();
+    successText.innerHTML = "Transaction successful";
+
+})
+// transfer section
+
+const transferBtn = document.getElementById("transferButton");
+
+transferBtn.addEventListener("click",()=>{
+    const form = document.getElementById("transferForm");
+    const amount = document.getElementById("transferAmount").value;
+    const to = document.getElementById("to").value;
+    const from = document.getElementById("from").value;
+    
+    if(!userBankDetails.transfer(to, from, amount)){
+        alert("transfer failed")
+
+    }else{
+        UI();
+    }
     form.reset();
 
 })
+
+
 
 
